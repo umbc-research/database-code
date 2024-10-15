@@ -10,10 +10,21 @@ Assumes the following table has been created already:
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=1 ;
 """
+
+def read_password(path):
+    try:
+        with open(path, 'r') as file:
+            password = file.read().strip()  # Stripping extra spaces/newlines
+        return password
+    except FileNotFoundError:
+        print(f"Error: The file '{file_path}' was not found.")
+        exit()
+
 def main():
+    password = read_password("./.password")
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='IA2&gtgr7TOxR4hRM5wwTm#%2m',
+                                 password=password,
                                  database='obsstor_test',
                                  charset='utf8mb4',
                                  cursorclass=pymysql.cursors.DictCursor) #a cursor is just a object used to interact with the database, this particular cursor returns results as a dictionary
